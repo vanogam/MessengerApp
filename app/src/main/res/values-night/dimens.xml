@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="size_60">60dp</dimen>
+    <dimen name="size_10">10dp</dimen>
+    <dimen name="size_txt_24">24sp</dimen>
+    <dimen name="size_50">50dp</dimen>
+    <dimen name="size_200">200dp</dimen>
+    <dimen name="size_350">350dp</dimen>
+    <dimen name="size_15">15dp</dimen>
+    <dimen name="size_20">20dp</dimen>
+    <dimen name="size_zero">0dp</dimen>
+    <dimen name="unit_weight">1</dimen>
+    <dimen name="size_one">1dp</dimen>
+    <dimen name="size_txt_20">20sp</dimen>
+    <dimen name="size_txt_25">25sp</dimen>
+    <dimen name="size_130">130dp</dimen>
 </resources>
