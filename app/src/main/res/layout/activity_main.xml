@@ -17,13 +17,13 @@
     <EditText
         android:id="@+id/nickname_et"
         style="@style/text_field_style"
-        android:text="@string/enter_nickname" />
+        android:hint="@string/enter_nickname" />
 
     <EditText
         android:id="@+id/password_et"
         style="@style/text_field_style"
         android:layout_marginTop="@dimen/size_15"
-        android:text="@string/enter_password" />
+        android:hint="@string/enter_password" />
 
     <LinearLayout
         android:id="@+id/authorization_layout"
@@ -49,7 +49,7 @@
             android:textSize="@dimen/size_txt_20" />
 
         <Button
-            android:id="@+id/sign_up_btn"
+            android:id="@+id/goto_sign_up_btn"
             android:layout_width="@dimen/size_130"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_10"
@@ -73,12 +73,12 @@
             android:id="@+id/job_et"
             style="@style/text_field_style"
             android:layout_marginTop="@dimen/size_20"
-            android:text="@string/enter_job" />
+            android:hint="@string/enter_job" />
 
         <Space style="@style/spaceStyle" />
 
         <Button
-            android:id="@+id/sign_up_btn2"
+            android:id="@+id/sign_up_btn"
             style="@style/BlueButtonStyle"
             android:text="@string/sign_up" />
 
