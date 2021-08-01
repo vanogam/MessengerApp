@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="text_field_style">
+        <item name="android:background">@drawable/rounded_corner_view</item>
+        <item name="android:backgroundTint">@color/light_blue</item>
+        <item name="android:layout_width">@dimen/size_350</item>
+        <item name="android:layout_height">@dimen/size_50</item>
+        <item name="android:layout_marginTop">@dimen/size_50</item>
+        <item name="android:textSize">@dimen/size_txt_24</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

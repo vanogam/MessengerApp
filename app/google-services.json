@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783652929916",
+    "project_id": "messenger-project-cfce3",
+    "storage_bucket": "messenger-project-cfce3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783652929916:android:6168129d6f3abbc1fda4f9",
+        "android_client_info": {
+          "package_name": "ge.finalproject.messengerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783652929916-p1i975m91fiev9nm6aqh9onfgikh07vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEVdYRYjrE4Ba3f3Ism9gYWmO0gvq-2gE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783652929916-p1i975m91fiev9nm6aqh9onfgikh07vc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
