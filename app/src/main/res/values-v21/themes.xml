@@ -7,5 +7,6 @@
         <item name="android:backgroundTint">@color/button_color</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textSize">@dimen/size_txt_25</item>
+        <item name="elevation">30dp</item>
     </style>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -53,7 +54,9 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-                        // StartActivity monacemebis gadacemit intentshi
+                        startActivity(Intent(this, HomePageActivity::class.java).apply {
+                            putExtra("User", user)
+                        })
                     } else {
                         Toast.makeText(baseContext, "Authentication failed",
                             Toast.LENGTH_SHORT).show()
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity() {
                         val user = auth.currentUser
                         // StartActivity monacemebis gadacemit intentshi
                     } else {
+                        Log.d("err",  task.exception.toString());
                         Toast.makeText(baseContext, "Registration failed",
                             Toast.LENGTH_SHORT).show()
                     }
