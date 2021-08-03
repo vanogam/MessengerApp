@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="@dimen/size_200"
+        android:layout_height="@dimen/size_200"
+        android:layout_marginTop="@dimen/size_100"
+        android:src="@drawable/avatar_image_placeholder" />
+
+    <EditText
+        android:id="@+id/nickname_et"
+        style="@style/text_field_style"
+        android:hint="@string/enter_nickname" />
+
+    <EditText
+        android:id="@+id/password_et"
+        style="@style/text_field_style"
+        android:layout_marginTop="@dimen/size_15"
+        android:hint="@string/enter_password" />
+
+    <LinearLayout
+        android:id="@+id/authorization_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/sign_in_btn"
+            style="@style/BlueButtonStyle"
+            android:layout_marginTop="@dimen/size_20"
+            android:text="@string/sign_in" />
+
+        <Space style="@style/spaceStyle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_registered"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/size_txt_20" />
+
+        <Button
+            android:id="@+id/goto_sign_up_btn"
+            android:layout_width="@dimen/size_130"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:backgroundTint="@color/white"
+            android:text="@string/sign_up"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/size_txt_20"
+            android:typeface="sans" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/registration_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/job_et"
+            style="@style/text_field_style"
+            android:layout_marginTop="@dimen/size_20"
+            android:hint="@string/enter_job" />
+
+        <Space style="@style/spaceStyle" />
+
+        <Button
+            android:id="@+id/sign_up_btn"
+            style="@style/BlueButtonStyle"
+            android:text="@string/sign_up" />
+
+        <Space style="@style/spaceStyle" />
+
+    </LinearLayout>
+
+</LinearLayout>
