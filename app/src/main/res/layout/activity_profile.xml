@@ -19,7 +19,7 @@
             android:src="@drawable/avatar_image_placeholder" />
 
         <TextView
-            android:id="@+id/nickname_et"
+            android:id="@+id/nickname_tv"
             style="@style/text_field_style" />
 
         <EditText
