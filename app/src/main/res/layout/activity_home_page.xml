@@ -5,37 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomePageActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_background"/>
+                android:src="@drawable/ic_background" />
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="0"
         android:src="@drawable/ic_plus"
         app:backgroundTint="@color/add_button_color"
-        app:tint="@color/white"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppBar"/>
+        app:layout_anchor="@id/bottomAppBar"
+        app:tint="@color/white" />
 
     <!--  Paddings are retarded, maybe change later  -->
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -43,18 +46,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="-16dp"
         android:layout_marginStart="-16dp"
-        android:layout_marginRight="-16dp"
+        android:layout_marginLeft="-16dp"
         android:layout_marginEnd="-16dp"
-        android:paddingLeft="16dp"
+        android:layout_marginRight="-16dp"
         android:paddingStart="16dp"
+        android:paddingLeft="16dp"
         app:buttonGravity="center_vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/imageButton2"
