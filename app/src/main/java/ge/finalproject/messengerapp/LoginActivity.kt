@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-                        // StartActivity monacemebis gadacemit intentshi
+                        HomePageActivity.start(this, nickname, password)
                     } else {
                         try {
                             throw task.exception!!
@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-                        // StartActivity monacemebis gadacemit intentshi
+                        HomePageActivity.start(this, nickname, password)
                     } else {
                         try {
                             throw task.exception!!
