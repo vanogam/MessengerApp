@@ -11,10 +11,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -46,23 +43,28 @@ class LoginActivity : AppCompatActivity() {
             val password: String = etPassword.text.toString()
 
             if (nickname.isEmpty()){
-                Toast.makeText(this, "Enter nickname!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, ENTER_EMAIL_MESSAGE, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 
             if (password.isEmpty()){
-                Toast.makeText(this, "Enter password!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, ENTER_PASS_MESSAGE, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 
-            auth.signInWithEmailAndPassword(nickname + DOMAIN_NAME, password)
+            auth.signInWithEmailAndPassword(nickname, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         // StartActivity monacemebis gadacemit intentshi
                     } else {
-                        Toast.makeText(baseContext, "Authentication failed",
-                            Toast.LENGTH_SHORT).show()
+                        try {
+                            throw task.exception!!
+                        } catch (e: FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(this, INVALIDITY_MESSAGE, Toast.LENGTH_SHORT).show()
+                        } catch (e: FirebaseAuthInvalidUserException) {
+                            Toast.makeText(this, INVALID_USER_MESSAGE, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
         })
@@ -80,31 +82,38 @@ class LoginActivity : AppCompatActivity() {
             val job: String = etJob.text.toString()
 
             if (nickname.isEmpty()){
-                Toast.makeText(this, "Enter nickname!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, ENTER_EMAIL_MESSAGE, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 
             if (password.isEmpty()){
-                Toast.makeText(this, "Enter password!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, ENTER_PASS_MESSAGE, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 
             if (job.isEmpty()){
-                Toast.makeText(this, "Enter job!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, ENTER_JOB_MESSAGE, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 
-            auth.createUserWithEmailAndPassword(nickname + DOMAIN_NAME, password)
+            auth.createUserWithEmailAndPassword(nickname, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         // StartActivity monacemebis gadacemit intentshi
                     } else {
-                        if (task.exception is FirebaseAuthUserCollisionException) {
-                            Toast.makeText(this, "Username already in use", Toast.LENGTH_SHORT).show()
-                        } else if (task.exception is FirebaseAuthWeakPasswordException) {
-                            Toast.makeText(this, "Password should be at least 6 characters", Toast.LENGTH_SHORT).show()
+                        try {
+                            throw task.exception!!
+                        } catch (e: FirebaseAuthUserCollisionException) {
+                            Toast.makeText(this, EMAIL_IN_USE_MESSAGE, Toast.LENGTH_SHORT).show()
+                        } catch (e: FirebaseAuthWeakPasswordException) {
+                            Toast.makeText(this, WEAK_PASS_MESSAGE, Toast.LENGTH_SHORT).show()
+                        } catch (e: FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(this, BAD_FORMAT_MESSAGE, Toast.LENGTH_SHORT).show()
                         }
+//                        catch (e: Exception) {
+//                            Log.e(TAG, "other exception thrown")
+//                        }
                     }
                 }
         })
@@ -129,7 +138,16 @@ class LoginActivity : AppCompatActivity() {
     companion object{
         const val PREFERENCE_FILE = "FILENAME"
         const val AUTH_MODE = "AUTH_MODE"
-        const val DOMAIN_NAME = "@gmail.com"
+
+        const val BAD_FORMAT_MESSAGE = "The email address is badly formatted"
+        const val EMAIL_IN_USE_MESSAGE = "Email already in use"
+        const val WEAK_PASS_MESSAGE = "Password should be at least 6 characters"
+        const val INVALID_USER_MESSAGE = "There is no user record corresponding to this email"
+        const val INVALIDITY_MESSAGE = "Invalid email or password"
+
+        const val ENTER_EMAIL_MESSAGE = "Enter email!"
+        const val ENTER_PASS_MESSAGE = "Enter password!"
+        const val ENTER_JOB_MESSAGE = "Enter job!"
 
         fun start(context: Context){
             context.startActivity(Intent(context, LoginActivity::class.java))
