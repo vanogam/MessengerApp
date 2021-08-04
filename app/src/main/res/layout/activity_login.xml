@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,14 +18,14 @@
         android:id="@+id/nickname_et"
         style="@style/text_field_style"
         android:hint="@string/enter_nickname"
-        android:inputType="textVisiblePassword"/>
+        android:inputType="textVisiblePassword" />
 
     <EditText
         android:id="@+id/password_et"
         style="@style/text_field_style"
         android:layout_marginTop="@dimen/size_15"
         android:hint="@string/enter_password"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword" />
 
     <LinearLayout
         android:id="@+id/authorization_layout"
@@ -53,15 +52,9 @@
 
         <Button
             android:id="@+id/goto_sign_up_btn"
-            android:layout_width="@dimen/size_130"
-            android:layout_height="wrap_content"
+            style="@style/WhiteButtonStyle"
             android:layout_marginBottom="@dimen/size_10"
-            android:backgroundTint="@color/white"
-            android:text="@string/sign_up"
-            android:textColor="@color/dark_gray"
-            android:textSize="@dimen/size_txt_20"
-            android:typeface="sans" />
-
+            android:text="@string/sign_up" />
     </LinearLayout>
 
     <LinearLayout
