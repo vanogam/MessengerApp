@@ -18,13 +18,15 @@
     <EditText
         android:id="@+id/nickname_et"
         style="@style/text_field_style"
-        android:hint="@string/enter_nickname" />
+        android:hint="@string/enter_nickname"
+        android:inputType="textVisiblePassword"/>
 
     <EditText
         android:id="@+id/password_et"
         style="@style/text_field_style"
         android:layout_marginTop="@dimen/size_15"
-        android:hint="@string/enter_password" />
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"/>
 
     <LinearLayout
         android:id="@+id/authorization_layout"
