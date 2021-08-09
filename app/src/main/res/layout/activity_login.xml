@@ -9,10 +9,11 @@
     tools:context=".LoginActivity">
 
     <ImageView
+        android:id="@+id/loginImage"
         android:layout_width="@dimen/size_200"
         android:layout_height="@dimen/size_200"
         android:layout_marginTop="@dimen/size_100"
-        android:src="@drawable/avatar_image_placeholder" />
+        android:src="@drawable/avatar_image_placeholder"/>
 
     <EditText
         android:id="@+id/nickname_et"
@@ -69,7 +70,8 @@
             android:id="@+id/job_et"
             style="@style/text_field_style"
             android:layout_marginTop="@dimen/size_20"
-            android:hint="@string/enter_job" />
+            android:hint="@string/enter_job"
+            android:inputType="textVisiblePassword"/>
 
         <Space style="@style/spaceStyle" />
 

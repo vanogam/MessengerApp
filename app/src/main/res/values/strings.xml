@@ -6,6 +6,10 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="not_registered">Not registered?</string>
+    <string name="name_placeholder"> </string>
+    <string name="message_placeholder"> </string>
+    <string name="timestamp_placeholder"> </string>
+    <string name="profile_pic_description">Contact profile picture</string>
     <string name="update">Update</string>
     <string name="sign_out">Sign Out</string>
 </resources>

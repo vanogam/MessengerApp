@@ -3,16 +3,21 @@ package ge.finalproject.messengerapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import ge.finalproject.messengerapp.utils.GlideApp
 
 
 class LoginActivity : AppCompatActivity() {
@@ -51,21 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 return@OnClickListener
             }
 
-            auth.signInWithEmailAndPassword(nickname, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        HomePageActivity.startFromAuthorization(this)
-                    } else {
-                        try {
-                            throw task.exception!!
-                        } catch (e: FirebaseAuthInvalidCredentialsException) {
-                            Toast.makeText(this, INVALIDITY_MESSAGE, Toast.LENGTH_SHORT).show()
-                        } catch (e: FirebaseAuthInvalidUserException) {
-                            Toast.makeText(this, INVALID_USER_MESSAGE, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+            login(nickname, password)
         })
 
         btnGotoSignUp.setOnClickListener(View.OnClickListener() {
@@ -98,8 +89,7 @@ class LoginActivity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(nickname, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        HomePageActivity.startFromRegistration(this, nickname, password, job)
+                        login(nickname, password)
                     } else {
                         try {
                             throw task.exception!!
@@ -110,12 +100,29 @@ class LoginActivity : AppCompatActivity() {
                         } catch (e: FirebaseAuthInvalidCredentialsException) {
                             Toast.makeText(this, BAD_FORMAT_MESSAGE, Toast.LENGTH_SHORT).show()
                         }
-//                        catch (e: Exception) {
-//                            Log.e(TAG, "other exception thrown")
-//                        }
+                        catch (e: Exception) {
+                            Log.e("ERROR", "exception: $e")
+                        }
                     }
                 }
         })
+    }
+
+    private fun login(nickname: String, password: String) {
+        auth.signInWithEmailAndPassword(nickname, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    HomePageActivity.startFromAuthorization(this)
+                } else {
+                    try {
+                        throw task.exception!!
+                    } catch (e: FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(this, INVALIDITY_MESSAGE, Toast.LENGTH_SHORT).show()
+                    } catch (e: FirebaseAuthInvalidUserException) {
+                        Toast.makeText(this, INVALID_USER_MESSAGE, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
     }
 
     private fun initView() {

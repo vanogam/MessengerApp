@@ -13,4 +13,5 @@
     <color name="dark_gray">#555252</color>
     <color name="add_button_color">#5479F1</color>
     <color name="transparent">#00000000</color>
+    <color name="searchbar_color">#C9FFFFFF</color>
 </resources>
