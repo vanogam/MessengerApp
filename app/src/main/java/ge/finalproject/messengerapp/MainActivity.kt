@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_chat)
 
-        val database = FirebaseDatabase.getInstance()
-        database.setPersistenceEnabled(true)
+        //val database = FirebaseDatabase.getInstance()
+        //database.setPersistenceEnabled(true)
 
-        LoginActivity.start(this)
+//        LoginActivity.start(this)
 
 
     }
