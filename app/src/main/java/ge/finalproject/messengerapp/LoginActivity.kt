@@ -2,6 +2,7 @@ package ge.finalproject.messengerapp
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -157,6 +158,16 @@ class LoginActivity : AppCompatActivity() {
 
         fun start(context: Context){
             context.startActivity(Intent(context, LoginActivity::class.java))
+        }
+
+        fun signOutAndStart(applicationContext: Context, context: Context){
+            val i = Intent(applicationContext, LoginActivity::class.java)
+            i.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            i.addFlags(FLAG_ACTIVITY_CLEAR_TASK)
+            i.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            i.putExtra("EXIT", true)
+            Firebase.auth.signOut()
+            context.startActivity(i)
         }
     }
 
