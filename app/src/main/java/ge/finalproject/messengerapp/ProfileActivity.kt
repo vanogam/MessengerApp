@@ -58,8 +58,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnSignOut.setOnClickListener{
+            Firebase.auth.signOut()
             LoginActivity.signOutAndStart(applicationContext, this)
-//            finish()
         }
     }
 

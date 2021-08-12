@@ -161,13 +161,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         fun signOutAndStart(applicationContext: Context, context: Context){
-            val i = Intent(applicationContext, LoginActivity::class.java)
-            i.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
-            i.addFlags(FLAG_ACTIVITY_CLEAR_TASK)
-            i.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            i.putExtra("EXIT", true)
-            Firebase.auth.signOut()
-            context.startActivity(i)
+            var intent = Intent(applicationContext, LoginActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("EXIT", true)
+            context.startActivity(intent)
         }
     }
 

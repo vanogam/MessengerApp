@@ -2,19 +2,11 @@ package ge.finalproject.messengerapp
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent.*
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.initialize
 import ge.finalproject.messengerapp.models.ChatHeader
 import ge.finalproject.messengerapp.models.User
 import ge.finalproject.messengerapp.presenter.ChatPresenter
@@ -63,5 +55,12 @@ class HomePageActivity : AppCompatActivity(), IChatListView {
 
     override fun onUserLoaded(uid: String, user: User) {
         TODO("Not yet implemented")
+    }
+
+    override fun onBackPressed() {
+        var intent = Intent(ACTION_MAIN)
+        intent.addCategory(CATEGORY_HOME)
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
