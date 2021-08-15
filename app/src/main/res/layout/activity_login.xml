@@ -37,21 +37,22 @@
         android:visibility="visible">
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/size_20"
-            android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/sign_in_btn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="true"
-            android:textSize="24sp"
-            android:text="@string/sign_in" />
+            android:layout_marginTop="@dimen/size_20"
+            >
+            <Button
+                android:id="@+id/sign_in_btn"
+                style="@style/BlueButtonStyle"
+                android:enabled="true"
+                android:text="@string/sign_in" />
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
+                android:id="@+id/loginLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:visibility="gone"/>
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
         </FrameLayout>
         <Space style="@style/spaceStyle" />
 
@@ -86,10 +87,25 @@
 
         <Space style="@style/spaceStyle" />
 
-        <Button
-            android:id="@+id/sign_up_btn"
-            style="@style/BlueButtonStyle"
-            android:text="@string/sign_up" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20"
+            >
+            <Button
+                android:id="@+id/sign_up_btn"
+                style="@style/BlueButtonStyle"
+                android:text="@string/sign_up" />
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/signUpLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+        </FrameLayout>
 
         <Space style="@style/spaceStyle" />
 

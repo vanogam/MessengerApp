@@ -30,14 +30,15 @@ class HomePageActivity : AppCompatActivity() {
     lateinit var viewPager: ViewPager2
     lateinit var appBarLayout: AppBarLayout
     lateinit var chatList: RecyclerView
+    lateinit var chatListView: ChatListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
-        chatList = findViewById(R.id.chatHeaderList)
-        ChatListPresenter(this).loadChatHeaders()
-        initView()
         var fragmentsList = arrayListOf(HomePageFragment(), ProfileFragment())
+
+//        ChatListPresenter(this).loadChatHeaders()
+        initView()
 
         var adapter = ViewPagerAdapter(this, fragmentsList)
         viewPager.adapter = adapter
@@ -72,29 +73,6 @@ class HomePageActivity : AppCompatActivity() {
         fab = findViewById(R.id.fab)
         viewPager = findViewById(R.id.viewPager)
         appBarLayout = findViewById(R.id.appBarLayout)
-    }
-
-
-    override fun onChatHeadersLoaded(chatHeaders: ArrayList<ChatHeader>) {
-        chatListView = ChatListAdapter(chatHeaders)
-        chatListView.setOnItemClickListener(object : ChatListAdapter.OnItemClickListener{
-            override fun onClick(position: Int) {
-                startActivity(Intent(this@HomePageActivity, ChatActivity::class.java).apply {
-                    putExtra(ChatActivity.CHAT_ID, chatHeaders[position].chatId)
-                    putExtra(ChatActivity.NICKNAME, chatHeaders[position].nickname)
-                    putExtra(ChatActivity.PROFILE_PIC, chatHeaders[position].profilePic)
-                    putExtra(ChatActivity.JOB, chatHeaders[position].job)
-                })
-
-            }
-
-        })
-        chatList.adapter = chatListView
-
-    }
-
-    override fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader) {
-        chatListView.onChatHeaderUpdated(chatId, chatHeader)
     }
 
     override fun onBackPressed() {
