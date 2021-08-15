@@ -104,12 +104,12 @@ class ProfileFragment : Fragment() {
 //        val intent = Intent()
 //        intent.type = "images/*"
 //        intent.action = ACTION_GET_CONTENT
-        startActivityForResult(intent, ProfileActivity.PICK_IMAGE)
+        startActivityForResult(intent, PICK_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == ProfileActivity.PICK_IMAGE) {
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data?.data!!
             Toast.makeText(context, "Image URI is: $imageUri", Toast.LENGTH_SHORT).show()
             uploadImage()
@@ -154,7 +154,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("ERROR", "error in ProfileActivity: ${error.message}")
+                Log.d("ERROR", "error in ProfileFragment: ${error.message}")
             }
         }
 
@@ -169,9 +169,5 @@ class ProfileFragment : Fragment() {
 
     companion object{
         const val PICK_IMAGE = 100
-
-        fun start(context: Context){
-            context.startActivity(Intent(context, ProfileActivity::class.java))
-        }
     }
 }
