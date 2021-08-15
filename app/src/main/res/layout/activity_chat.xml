@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomePageActivity"
+    android:windowSoftInputMode="adjustResize"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -26,38 +27,43 @@
                 app:layout_collapseMode="parallax" />
 
             <ImageButton
+                android:id="@+id/backButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_arrow_back"
                 app:tint="@color/white"
-                android:background="@color/transparent"
-                app:layout_collapseMode="pin"/>
+                android:background="@color/transparent" />
 
             <TextView
+                android:id="@+id/contactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name Surname"
+                android:text="Name Surnameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                android:maxWidth="220dp"
+                android:maxLines="1"
                 android:textColor="@color/white"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="96dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_collapseMode="parallax"/>
+                />
 
             <TextView
+                android:id="@+id/subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="subtitle"
+                android:text="subtitleeeeeeeeeeeeeeeee"
+                android:maxLines="1"
+                android:maxWidth="180dp"
                 android:textColor="@color/white"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="148dp"
                 android:textSize="16sp"
-                app:layout_collapseMode="parallax"
                 />
 
             <ImageView
@@ -76,7 +82,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="parallax" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -84,27 +90,39 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatHeaderList"
+        android:id="@+id/messagesList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="490dp"
+        android:paddingBottom="200dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <EditText
-        android:id="@+id/messageTextField"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:layout_margin="16dp"
-        android:maxLines="3"
-        android:hint="Message"
-        android:scrollHorizontally="true"
-        android:background="@drawable/message_edittext_background"
+        app:layout_anchor="@+id/messagesList"
+        app:layout_anchorGravity="bottom|center"
+        android:background="@color/white">
+        <EditText
+            android:id="@+id/messageTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/message_edittext_background"
+            android:hint="Message"
+            android:maxLines="3"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:scrollHorizontally="true"/>
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_send"
+            android:background="@color/transparent"
+            android:layout_gravity="center|end"
+            android:layout_marginRight="32dp"
+            android:layout_marginEnd="32dp" />
 
-        >
-
-    </EditText>
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

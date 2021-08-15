@@ -2,18 +2,18 @@
     android:shape="rectangle">
 
     <corners
-        android:bottomRightRadius="5dp"
+        android:bottomLeftRadius="5dp"
         android:radius="40dp" />
 
 
 
     <!--If your shape requires only one solid color-->
     <solid
-        android:color="#2196F3" />
+        android:color="#F4F6FF" />
 
     <size
-        android:width="82dp"
-        android:height="82dp" />
+        android:width="32dp"
+        android:height="32dp" />
 
     <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
     to add dashes to your stroke-->

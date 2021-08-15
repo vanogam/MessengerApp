@@ -5,8 +5,8 @@
     <solid android:color="@color/chat_color" />
 
     <size
-        android:width="82dp"
-        android:height="82dp" />
+        android:width="52dp"
+        android:height="52dp" />
 
     <!--If you want to add padding-->
     <!-- <padding

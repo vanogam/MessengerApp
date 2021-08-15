@@ -1,5 +1,6 @@
 package ge.finalproject.messengerapp
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
@@ -26,12 +27,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        setContentView(R.layout.activity_main)
 
-        //val database = FirebaseDatabase.getInstance()
-        //database.setPersistenceEnabled(true)
+        val database = FirebaseDatabase.getInstance()
+        database.setPersistenceEnabled(true)
+//        startActivity(Intent(this, ChatActivity::class.java))
 
-//        LoginActivity.start(this)
+        LoginActivity.start(this)
 
 
     }

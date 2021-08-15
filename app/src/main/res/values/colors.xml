@@ -15,4 +15,5 @@
     <color name="transparent">#00000000</color>
     <color name="searchbar_color">#C9FFFFFF</color>
     <color name="chat_color">#F4F4F4</color>
+    <color name="received_text_color">#5A678A</color>
 </resources>
