@@ -28,13 +28,13 @@ class HomePageActivity : AppCompatActivity(), IChatListView {
 
     }
 
-    override fun onChatHeadersLoaded(chatHeaders: List<ChatHeader>) {
+    override fun onChatHeadersLoaded(chatHeaders: ArrayList<ChatHeader>) {
         chatListView = ChatListAdapter(chatHeaders)
         findViewById<RecyclerView>(R.id.chatHeaderList).adapter = chatListView
     }
 
     override fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader) {
-        TODO("Not yet implemented")
+        chatListView.onChatHeaderUpdated(chatId, chatHeader)
     }
 
     override fun onUserLoaded(uid: String, user: User) {

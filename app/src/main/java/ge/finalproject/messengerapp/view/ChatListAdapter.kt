@@ -25,7 +25,7 @@ import java.util.*
 
 
 class ChatListAdapter (
-    private val values: List<ChatHeader>,
+    private val values: ArrayList<ChatHeader>,
 ) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -115,6 +115,21 @@ class ChatListAdapter (
 
         val formatter = SimpleDateFormat("dd MMM", Locale.US)
         return formatter.format(Date(time))
+    }
+
+    fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader) {
+        var i = 0
+        while (i < values.size) {
+            if (values[i].chatId == chatId) {
+                values.remove(values[i])
+                values.add(0, chatHeader)
+                (context as Activity).findViewById<RecyclerView>(R.id.chatHeaderList).post {
+                    notifyItemInserted(0)
+                    notifyItemRemoved(i)
+                }
+                break
+            }
+        }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
