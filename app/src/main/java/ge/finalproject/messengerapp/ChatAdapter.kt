@@ -132,6 +132,7 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: Recycler
         numLoaded.incrementAndGet()
         uiThread.post {
             notifyItemInserted(values.size - 1)
+            uiThread.scrollToPosition(values.size - 1)
         }
     }
 
@@ -147,7 +148,7 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: Recycler
 
         val formatter = SimpleDateFormat("dd MMM", Locale.US)
         val answer = formatter.format(Date(time))
-        if (answer == "0 min") {
+        if (answer[0] == '0') {
             return "Now"
         }
         return answer
