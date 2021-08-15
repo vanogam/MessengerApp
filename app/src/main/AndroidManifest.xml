@@ -3,7 +3,7 @@
     package="ge.finalproject.messengerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MessengerApp">
-        <activity android:name=".ChatActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".UserSearchActivity"></activity>
+        <activity android:name=".ProfileActivity" /> <!-- <activity android:name=".LoginActivity" /> -->
         <activity android:name=".HomePageActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

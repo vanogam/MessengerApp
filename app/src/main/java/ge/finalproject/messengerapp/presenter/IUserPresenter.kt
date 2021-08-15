@@ -1,9 +1,10 @@
 package ge.finalproject.messengerapp.presenter
 
-import ge.finalproject.messengerapp.models.User
+import ge.finalproject.messengerapp.models.UserHeader
 
 interface IUserPresenter {
-    fun getUserInfo(uid: String)
 
-    fun onUserLoaded(uid: String, user: User)
+    fun loadUserHeaders()
+//    fun onUserHeadersFetched(userHeaders: ArrayList<UserHeader?>)
+//    fun onOtherUserHeadersFetched(userHeaders: ArrayList<UserHeader?>)
 }
