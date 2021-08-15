@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +34,7 @@ class ProfileFragment : Fragment() {
     private lateinit var etJob: EditText
     private lateinit var tvNickname: TextView
     private lateinit var imageUri: Uri
+    private lateinit var isLoading: CircularProgressIndicator
     private val user: FirebaseUser = Firebase.auth.currentUser!!
     private lateinit var userReference: DatabaseReference
     lateinit var myView : View
@@ -122,6 +124,7 @@ class ProfileFragment : Fragment() {
         btnSignOut = view.findViewById(R.id.sign_out_btn)
         etJob = view.findViewById(R.id.job_et)
         tvNickname = view.findViewById(R.id.nickname_tv)
+        isLoading = view.findViewById(R.id.update_loading)
     }
 
     private fun setField(field: String){
@@ -163,11 +166,24 @@ class ProfileFragment : Fragment() {
 
     private fun updateInfo(){
         btnUpdate.setOnClickListener{
-            userReference.child("job").setValue(etJob.text.toString())
+            btnUpdate.isEnabled = false
+            isLoading.visibility = View.VISIBLE
+            userReference.child("job").setValue(etJob.text.toString()).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(myView.context, SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(myView.context, FAILURE_MESSAGE, Toast.LENGTH_SHORT).show()
+                }
+                btnUpdate.isEnabled = true
+                isLoading.visibility = View.GONE
+            }
         }
     }
 
     companion object{
         const val PICK_IMAGE = 100
+        const val SUCCESS_MESSAGE = "Account updated successfully!"
+        const val FAILURE_MESSAGE = "Account update failed!"
     }
 }
