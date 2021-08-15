@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinator"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePageActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".HomePageActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -16,8 +17,8 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:contentScrim="@color/purple_500">
+            app:contentScrim="@color/purple_500"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
@@ -38,39 +39,49 @@
                 android:layout_width="match_parent"
 
                 android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
                 app:floatingSearch_backgroundColor="@color/searchbar_color"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_dimBackground="false"
                 app:floatingSearch_leftActionMode="showSearch"
                 app:floatingSearch_searchBarMarginLeft="16dp"
                 app:floatingSearch_searchBarMarginRight="16dp"
-                android:layout_marginBottom="8dp"
                 app:floatingSearch_searchHint="Search..."
-                app:floatingSearch_dimBackground="false"
                 app:floatingSearch_showSearchKey="false"
-                app:floatingSearch_suggestionsListAnimDuration="250"
-                android:layout_gravity="bottom" />
+                app:floatingSearch_suggestionsListAnimDuration="250" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatHeaderList"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.viewpager2.widget.ViewPager2>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="0"
         android:src="@drawable/ic_plus"
         app:backgroundTint="@color/add_button_color"
-        app:tint="@color/white"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppBar"/>
+        app:layout_anchor="@id/bottomAppBar"
+        app:tint="@color/white" />
 
     <!--  Paddings are retarded, maybe change later  -->
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -78,19 +89,18 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="-16dp"
         android:layout_marginStart="-16dp"
-        android:layout_marginRight="-16dp"
+        android:layout_marginLeft="-16dp"
         android:layout_marginEnd="-16dp"
-        android:paddingLeft="16dp"
+        android:layout_marginRight="-16dp"
         android:paddingStart="16dp"
-        app:hideOnScroll="true"
-        app:fabAlignmentMode="center">
+        android:paddingLeft="16dp"
+        app:fabAlignmentMode="center"
+        app:hideOnScroll="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/goto_profile_btn"
