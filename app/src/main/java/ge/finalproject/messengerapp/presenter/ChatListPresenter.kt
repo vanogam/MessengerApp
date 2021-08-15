@@ -11,13 +11,15 @@ import ge.finalproject.messengerapp.view.IChatListView
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
-class ChatPresenter(val view: IChatListView): IChatPresenter {
+class ChatListPresenter(val view: IChatListView): IChatListPresenter {
 
     lateinit var contactListener: ValueEventListener
 
     private val chatHeaderListeners = HashMap<String, ValueEventListener>()
 
     lateinit var cachedContacts: HashMap<String, Any>
+
+    var chatHeadersLoaded = false
 
     val cachedChatHeaders = ConcurrentHashMap<String, ChatHeader?>()
 
@@ -39,11 +41,13 @@ class ChatPresenter(val view: IChatListView): IChatPresenter {
         }
         chatHeaderList.sort()
         chatHeaderList.reverse()
+
+        chatHeadersLoaded = true
         view.onChatHeadersLoaded(chatHeaderList)
     }
 
-    override fun onChatHeaderUpdated() {
-        TODO("Not yet implemented")
+    override fun onChatHeaderUpdated(chatId: String) {
+        view.onChatHeaderUpdated(chatId, cachedChatHeaders[chatId]!!)
     }
 
     override fun onChatHeaderAdded() {
@@ -97,7 +101,7 @@ class ChatPresenter(val view: IChatListView): IChatPresenter {
         }
 
         if (cachedChatHeaders.containsKey(chatId)) {
-            onChatHeaderLoaded()
+            onChatHeaderLoaded(chatId)
         }
     }
 
@@ -112,7 +116,11 @@ class ChatPresenter(val view: IChatListView): IChatPresenter {
         getChatHeaders()
     }
 
-    fun onChatHeaderLoaded() {
+    fun onChatHeaderLoaded(chatId: String) {
+        if (chatHeadersLoaded) {
+            onChatHeaderUpdated(chatId)
+            return
+        }
         var loaded = numLoaded.incrementAndGet()
         if (loaded == cachedContacts.size) {
             onChatHeadersLoaded()
@@ -130,10 +138,9 @@ class ChatPresenter(val view: IChatListView): IChatPresenter {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val u = snapshot.getValue(User::class.java)
-                Log.d("UUU", u!!.profilePicture)
                 chatHeader.nickname = u!!.nickname!!
                 chatHeader.profilePic = u.profilePicture
-                onChatHeaderLoaded()
+                onChatHeaderLoaded(chatId)
                 Firebase.database.reference
                     .child("users")
                     .child(uid)

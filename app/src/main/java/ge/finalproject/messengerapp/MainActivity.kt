@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance()
         database.setPersistenceEnabled(true)
-//        startActivity(Intent(this, ChatActivity::class.java))
+        startActivity(Intent(this, ChatActivity::class.java))
 
-        LoginActivity.start(this)
+//        LoginActivity.start(this)
 
 
     }
