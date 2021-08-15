@@ -2,6 +2,7 @@ package ge.finalproject.messengerapp
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
@@ -10,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ge.finalproject.messengerapp.models.ChatHeader
 import ge.finalproject.messengerapp.models.UserHeader
 import ge.finalproject.messengerapp.presenter.ChatListPresenter
+import ge.finalproject.messengerapp.presenter.ChatPresenter
 import ge.finalproject.messengerapp.view.ChatListAdapter
 import ge.finalproject.messengerapp.view.IChatListView
 
@@ -18,10 +20,12 @@ class HomePageActivity : AppCompatActivity(), IChatListView {
     lateinit var btnGotoProfile: ImageButton
     lateinit var btnHomePage: ImageButton
     lateinit var fab: FloatingActionButton
+    lateinit var chatList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
+        chatList = findViewById(R.id.chatHeaderList)
         ChatListPresenter(this).loadChatHeaders()
         initView()
         btnGotoProfile.setOnClickListener{
@@ -35,6 +39,7 @@ class HomePageActivity : AppCompatActivity(), IChatListView {
         fab.setOnClickListener{
             UserSearchActivity.start(this)
         }
+
     }
 
     companion object{
@@ -51,15 +56,24 @@ class HomePageActivity : AppCompatActivity(), IChatListView {
 
     override fun onChatHeadersLoaded(chatHeaders: ArrayList<ChatHeader>) {
         chatListView = ChatListAdapter(chatHeaders)
-        findViewById<RecyclerView>(R.id.chatHeaderList).adapter = chatListView
+        chatListView.setOnItemClickListener(object : ChatListAdapter.OnItemClickListener{
+            override fun onClick(position: Int) {
+                startActivity(Intent(this@HomePageActivity, ChatActivity::class.java).apply {
+                    putExtra(ChatActivity.CHAT_ID, chatHeaders[position].chatId)
+                    putExtra(ChatActivity.NICKNAME, chatHeaders[position].nickname)
+                    putExtra(ChatActivity.PROFILE_PIC, chatHeaders[position].profilePic)
+                    putExtra(ChatActivity.JOB, chatHeaders[position].job)
+                })
+
+            }
+
+        })
+        chatList.adapter = chatListView
+
     }
 
     override fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader) {
         chatListView.onChatHeaderUpdated(chatId, chatHeader)
-    }
-
-    override fun onUserLoaded(uid: String, user: UserHeader) {
-        TODO("Not yet implemented")
     }
 
     override fun onBackPressed() {

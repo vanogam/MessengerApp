@@ -7,8 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import ge.finalproject.messengerapp.models.Message
+import ge.finalproject.messengerapp.presenter.ChatPresenter
+import ge.finalproject.messengerapp.presenter.IChatPresenter
+import ge.finalproject.messengerapp.view.IChatView
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : AppCompatActivity(), IChatView {
 
     private lateinit var avatar: ImageView
     private lateinit var appBar:AppBarLayout
@@ -17,6 +21,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var name:TextView
     private lateinit var subtitle:TextView
     private lateinit var messages:RecyclerView
+    private lateinit var chatId: String
+    private lateinit var presenter: IChatPresenter
+    private lateinit var adapter: ChatAdapter
 
     private var initialHeight = 0
 
@@ -40,7 +47,16 @@ class ChatActivity : AppCompatActivity() {
         toolbarHeight = toolbar.layoutParams.height
         scale = resources.displayMetrics.density
 
-        messages.adapter = ChatAdapter()
+        chatId = intent.getStringExtra(CHAT_ID)!!
+        name.text = intent.getStringExtra(NICKNAME)!!
+        subtitle.text = intent.getStringExtra(JOB)!!
+        chatId = intent.getStringExtra(CHAT_ID)!!
+
+        presenter = ChatPresenter(this)
+        adapter = ChatAdapter(this, chatId, messages)
+        presenter.initListener(chatId)
+
+        messages.adapter = adapter
         messages.scrollToPosition(15)
 
         appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
@@ -70,5 +86,28 @@ class ChatActivity : AppCompatActivity() {
         avatar.post {
             avatar.requestLayout();
         }
+    }
+
+    override fun onMessageLoaded(id: Int, message: Message) {
+        adapter.onMessageLoaded(id, message)
+    }
+
+    override fun onMessageAdded(message: Message) {
+        adapter.onMessageAdded(message)
+    }
+
+    override fun loadMessages(id: String, fromTime: Long, limit: Int, startIndex: Int) {
+        presenter.loadChat(id, fromTime, limit, startIndex)
+    }
+
+    override fun getViewScale(): Float {
+        return scale
+    }
+
+    companion object {
+        const val CHAT_ID = "CHAT_ID"
+        const val NICKNAME = "NICKNAME"
+        const val JOB = "JOB"
+        const val PROFILE_PIC = "PROFILE_PIC"
     }
 }

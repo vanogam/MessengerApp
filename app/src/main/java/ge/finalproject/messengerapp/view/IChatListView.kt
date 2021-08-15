@@ -7,6 +7,4 @@ interface IChatListView {
     fun onChatHeadersLoaded(chatHeaders: ArrayList<ChatHeader>);
 
     fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader);
-
-    fun onUserLoaded(uid: String, user: UserHeader)
 }

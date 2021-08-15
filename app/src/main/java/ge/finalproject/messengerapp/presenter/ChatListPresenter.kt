@@ -138,8 +138,9 @@ class ChatListPresenter(val view: IChatListView): IChatListPresenter {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val u = snapshot.getValue(UserHeader::class.java)
-                chatHeader.nickname = u!!.nickname!!
+                chatHeader.nickname = u!!.nickname
                 chatHeader.profilePic = u.profilePicture
+                chatHeader.job = u.job
                 onChatHeaderLoaded(chatId)
                 Firebase.database.reference
                     .child("users")

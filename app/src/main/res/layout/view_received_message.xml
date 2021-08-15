@@ -8,7 +8,7 @@
     >
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/messageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -24,30 +24,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/messageTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="time"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/messageText"
+        app:layout_constraintStart_toEndOf="@+id/messageText"
+        app:layout_constraintTop_toTopOf="@+id/messageText"
         app:layout_constraintVertical_bias="0.5" />
 
     <Space
         android:id="@+id/bottomMargin"
         android:layout_width="0dp"
-        android:layout_height="8dp"
+        android:layout_height="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/messageText" />
 
     <Space
         android:id="@+id/topMargin"
         android:layout_width="0dp"
-        android:layout_height="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:layout_height="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

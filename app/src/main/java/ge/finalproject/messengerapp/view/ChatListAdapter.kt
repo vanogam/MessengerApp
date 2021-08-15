@@ -25,12 +25,21 @@ import java.util.*
 
 
 class ChatListAdapter (
-    private val values: ArrayList<ChatHeader>,
+    val values: ArrayList<ChatHeader>,
 ) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
-    private lateinit var context: Context
 
+    private lateinit var context: Context
     private var numLoaded = 0
+    lateinit var chatListener: OnItemClickListener;
+
+    interface OnItemClickListener {
+        fun onClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        chatListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -43,48 +52,6 @@ class ChatListAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entry = values[position]
 
-        if (position == numLoaded) {
-            holder.isLoading.visibility=View.VISIBLE
-            if (entry.profilePic == "") {
-                holder.profilePic.setImageDrawable(context.resources.getDrawable(R.drawable.avatar_image_placeholder))
-                setValues(holder, entry)
-            } else {
-                val storageRef = FirebaseStorage.getInstance().reference
-                val pictRef = storageRef.child(entry.profilePic)
-                pictRef.downloadUrl.addOnSuccessListener {
-                    GlideApp.with(context)
-                        .load(it)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .circleCrop()
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                holder.isLoading.visibility = View.GONE
-                                Toast.makeText(context, "Connection failedd", Toast.LENGTH_SHORT)
-                                    .show()
-                                return false
-                            }
-
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                setValues(holder, entry)
-                                return false
-                            }
-                        })
-                        .into(holder.profilePic)
-                }
-            }
-        }
-//        holder.lastMessage.text = entry.lastMessage
     }
 
     override fun getItemCount(): Int = (numLoaded + 1).coerceAtMost(values.size)
@@ -138,5 +105,15 @@ class ChatListAdapter (
         val isLoading: CircularProgressIndicator = view.findViewById(R.id.isLoading)
         val lastMessage: TextView = view.findViewById(R.id.lastMessage)
         val profilePic: ImageView = view.findViewById(R.id.profilePic)
+
+        init {
+            itemView.setOnClickListener {
+                if (chatListener != null) {
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        chatListener.onClick(adapterPosition)
+                    }
+                }
+            }
+        }
     }
 }

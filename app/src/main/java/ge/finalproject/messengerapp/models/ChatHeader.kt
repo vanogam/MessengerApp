@@ -6,6 +6,7 @@ data class ChatHeader(
     var firstUser: String = "",
     var secondUser: String = "",
     var lastMessage: String = "",
+    var job: String = "",
     var lastMessageSender: String = "",
     var lastMessageTime: Long = 0,
     var chatId: String = "",
