@@ -1,6 +1,7 @@
 package ge.finalproject.messengerapp.presenter
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,6 +16,7 @@ class ChatPresenter(val view: IChatView) : IChatPresenter {
     private var currentId: String? = null
     private var currentListener: ChildEventListener? = null
     private var isLastLoaded = false
+    private var isLoading = false
 
     override fun initListener(chatId: String) {
         if (currentId != null) {
@@ -24,6 +26,7 @@ class ChatPresenter(val view: IChatView) : IChatPresenter {
         currentListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java)
+
                 if (!isLastLoaded) {
                     isLastLoaded = true
                 } else {
@@ -36,7 +39,6 @@ class ChatPresenter(val view: IChatView) : IChatPresenter {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 val message = snapshot.getValue(Message::class.java)
-                Log.d("MESSR", message!!.message)
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -52,18 +54,29 @@ class ChatPresenter(val view: IChatView) : IChatPresenter {
     }
 
     override fun loadChat(chatId: String, maxTime: Long, limit: Int, startIndex: Int) {
-        Log.d("KKK", "!@#")
         db.child("chats").child(chatId).orderByChild("time")
             .startAt(-maxTime.toDouble())
             .limitToFirst(limit)
             .get()
             .addOnSuccessListener { result ->
                 var index = 0
+
                 result.children.forEach {
                     onMessageLoaded(startIndex + index, it.getValue(Message::class.java)!!)
                     index += 1
                 }
             }
+    }
+
+    override fun sendMessage(text: String) {
+
+        db.child("chats").child(currentId!!).push().setValue(
+            Message(
+                text,
+                -System.currentTimeMillis(),
+                FirebaseAuth.getInstance().currentUser!!.uid
+            )
+        )
     }
 
     private fun onMessageLoaded(id: Int, message: Message) {

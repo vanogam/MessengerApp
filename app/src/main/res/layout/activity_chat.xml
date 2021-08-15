@@ -32,16 +32,7 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />
 
-                <ImageButton
-                    android:id="@+id/backButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="48dp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/white" />
+
 
                 <TextView
                     android:id="@+id/contactName"
@@ -52,7 +43,7 @@
                     android:layout_marginTop="96dp"
                     android:maxWidth="220dp"
                     android:maxLines="1"
-                    android:text="Name Surnameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -66,9 +57,16 @@
                     android:layout_marginTop="148dp"
                     android:maxWidth="180dp"
                     android:maxLines="1"
-                    android:text="subtitleeeeeeeeeeeeeeeee"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="16sp" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:descendantFocusability="afterDescendants"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    app:layout_collapseMode="parallax" />
 
                 <ImageView
                     android:id="@+id/chatAvatar"
@@ -78,16 +76,22 @@
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginBottom="32dp"
-                    android:contentDescription="avatar"
+                    android:contentDescription="@string/avatar_description"
                     android:src="@drawable/avatar_image_placeholder"
                     app:layout_collapseParallaxMultiplier="0.9" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    app:layout_collapseMode="parallax" />
 
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="48dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="48dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_arrow_back"
+                    android:contentDescription="@string/back_button_description"
+                    app:tint="@color/white" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -110,20 +114,24 @@
         android:background="@color/white">
 
         <EditText
+            android:inputType="text"
             android:id="@+id/messageTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="16dp"
             android:background="@drawable/message_edittext_background"
-            android:hint="Message"
+            android:hint="@string/message_hint"
             android:paddingEnd="50dp"
             android:maxLines="3"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:scrollHorizontally="true" />
+            android:scrollHorizontally="true"
+            android:autofillHints="name" />
 
         <ImageButton
+            android:id="@+id/sendButton"
+            android:contentDescription="@string/send_message"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center|end"

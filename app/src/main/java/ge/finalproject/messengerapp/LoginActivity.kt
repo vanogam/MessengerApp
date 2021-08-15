@@ -113,8 +113,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(nickname, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this@LoginActivity, ChatActivity::class.java))
-//                  HomePageActivity.startFromAuthorization(this)
+//                    startActivity(Intent(this@LoginActivity, ChatActivity::class.java))
+                  HomePageActivity.startFromAuthorization(this)
                 } else {
                     try {
                         throw task.exception!!

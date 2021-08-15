@@ -13,26 +13,33 @@ import ge.finalproject.messengerapp.models.Message
 import ge.finalproject.messengerapp.view.IChatView
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
 
-class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: RecyclerView) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
     private lateinit var context: Context
 
-    private var numLoaded = 0
+    private var numLoaded = AtomicInteger(0)
     private var messagesToLoad = 0
     private var targetLoaded = 0
     private var timeLoaded = System.currentTimeMillis()
+    private var initial = true
     private val values = ArrayList<Message?>().apply {
         add(null)
     }
     private var allLoaded = 0
 
     override fun getItemViewType(position: Int): Int {
-        Log.d("EEE", "$numLoaded $allLoaded")
-        if (values[position] == null) {
+//        Log.d("EEE", (numLoaded.get() - 1 - position).toString())
+        if (position == 0 && allLoaded == 0) {
             return 2
         }
-        return if (values[position]!!.sender == FirebaseAuth.getInstance().currentUser!!.uid) {
+        if (numLoaded.get() - allLoaded - position < 0) {
+            return 2
+        }
+//        Log.d("EEE1", values[numLoaded.get() - 1 - position].toString())
+
+        return if (values[numLoaded.get() - allLoaded - position]!!.sender == FirebaseAuth.getInstance().currentUser!!.uid) {
             0
         } else {
             1
@@ -45,9 +52,9 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : 
         if (viewType == 2) {
             view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.view_loading, parent, false)
-            this.view.loadMessages(chatId, timeLoaded, 10, numLoaded)
+            this.view.loadMessages(chatId, timeLoaded, 10, numLoaded.get())
             messagesToLoad = 10
-            targetLoaded = numLoaded + 10
+            targetLoaded = numLoaded.get() + 10
             return ViewHolder(view, true)
         }
         if (viewType == 0) {
@@ -61,8 +68,14 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val truePosition = numLoaded - 1 - position
-        if (truePosition == -1) {
+        val truePosition = numLoaded.get() - allLoaded - position
+        if (values[truePosition] == null) {
+            if (timeLoaded != -1L) {
+                this.view.loadMessages(chatId, timeLoaded, 10, numLoaded.get())
+                messagesToLoad = 10
+                targetLoaded = numLoaded.get() + 10
+                timeLoaded = -1L
+            }
             return
         }
         val entry: Message = values[truePosition]!!
@@ -75,12 +88,11 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : 
 
     }
 
-    override fun getItemCount(): Int = numLoaded + 1 - allLoaded
+    override fun getItemCount(): Int = numLoaded.get() + 1 - allLoaded
 
-//    @Synchronized
+    @Synchronized
     fun onMessageLoaded(position: Int, message: Message) {
-        Log.d("MMM", position.toString() + " " + message)
-        while (values.size <= position) values.add(null)
+        while (values.size <= position + 1) values.add(null)
         values[position] = message
         messagesToLoad --
         if (message.sender == "sys") {
@@ -89,22 +101,35 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : 
             allLoaded = 1
         }
         if (messagesToLoad == 0) {
-            var idx = numLoaded
+            var idx = numLoaded.get()
             while (idx < targetLoaded) {
                 uiThread.post {
                     notifyItemInserted(0)
-                    numLoaded ++
+                    numLoaded.incrementAndGet()
                 }
+                if (values[idx] != null) {
+                    timeLoaded = -values[idx]!!.time - 1
+                }
+
                 idx ++
             }
 //            numLoaded -= allLoaded
+            if (initial) {
+                uiThread.post {
+                    uiThread.scrollToPosition(11)
+                }
+            }
+            initial = false
         }
 
     }
 
     fun onMessageAdded(message: Message) {
+        if (message.sender == "sys") {
+            return
+        }
         values.add(0, message)
-        numLoaded ++
+        numLoaded.incrementAndGet()
         uiThread.post {
             notifyItemInserted(values.size - 1)
         }
@@ -121,7 +146,11 @@ class ChatAdapter(val view: IChatView, val chatId: String,val uiThread: View) : 
         }
 
         val formatter = SimpleDateFormat("dd MMM", Locale.US)
-        return formatter.format(Date(time))
+        val answer = formatter.format(Date(time))
+        if (answer == "0 min") {
+            return "Now"
+        }
+        return answer
     }
 
 

@@ -6,4 +6,6 @@ interface IChatPresenter {
 
     fun loadChat(chatId: String, maxTime: Long, limit: Int, startIndex: Int)
 
+    fun sendMessage(text: String)
+
 }

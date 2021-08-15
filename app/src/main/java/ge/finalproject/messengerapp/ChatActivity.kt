@@ -1,15 +1,24 @@
 package ge.finalproject.messengerapp
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import ge.finalproject.messengerapp.models.Message
 import ge.finalproject.messengerapp.presenter.ChatPresenter
 import ge.finalproject.messengerapp.presenter.IChatPresenter
+import ge.finalproject.messengerapp.utils.GlideApp
 import ge.finalproject.messengerapp.view.IChatView
 
 class ChatActivity : AppCompatActivity(), IChatView {
@@ -24,6 +33,8 @@ class ChatActivity : AppCompatActivity(), IChatView {
     private lateinit var chatId: String
     private lateinit var presenter: IChatPresenter
     private lateinit var adapter: ChatAdapter
+    private lateinit var sendButton: ImageButton
+    private lateinit var messageField: EditText
 
     private var initialHeight = 0
 
@@ -42,6 +53,8 @@ class ChatActivity : AppCompatActivity(), IChatView {
         subtitle = findViewById(R.id.subtitle)
         backButton = findViewById(R.id.backButton)
         messages = findViewById(R.id.messagesList)
+        sendButton = findViewById(R.id.sendButton)
+        messageField = findViewById(R.id.messageTextField)
 
         initialHeight = avatar.layoutParams.height
         toolbarHeight = toolbar.layoutParams.height
@@ -50,14 +63,63 @@ class ChatActivity : AppCompatActivity(), IChatView {
         chatId = intent.getStringExtra(CHAT_ID)!!
         name.text = intent.getStringExtra(NICKNAME)!!
         subtitle.text = intent.getStringExtra(JOB)!!
-        chatId = intent.getStringExtra(CHAT_ID)!!
+        if (intent.getStringExtra(PROFILE_PIC) == null || intent.getStringExtra(PROFILE_PIC)!! == "") {
+            GlideApp.with(this)
+                .load(resources.getDrawable(R.drawable.avatar_image_placeholder))
+                .circleCrop()
+                .into(avatar)
+        } else {
+            val pictRef =
+                FirebaseStorage.getInstance().reference.child(intent.getStringExtra(PROFILE_PIC)!!)
+            pictRef.downloadUrl.addOnSuccessListener {
+                GlideApp.with(this)
+                    .load(it)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .circleCrop()
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Toast.makeText(
+                                this@ChatActivity,
+                                "Connection failed",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+                    })
+                    .into(avatar)
+            }
+        }
 
         presenter = ChatPresenter(this)
         adapter = ChatAdapter(this, chatId, messages)
         presenter.initListener(chatId)
 
         messages.adapter = adapter
-        messages.scrollToPosition(15)
+        appBar.setExpanded(false)
+
+        sendButton.setOnClickListener {
+            presenter.sendMessage(messageField.text.toString())
+        }
+
+        backButton.setOnClickListener {
+            finish()
+        }
 
         appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {

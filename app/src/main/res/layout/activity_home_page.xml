@@ -65,7 +65,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
-        android:contentDescription="0"
+        android:contentDescription="@string/add_contact"
         android:src="@drawable/ic_plus"
         app:backgroundTint="@color/add_button_color"
         app:tint="@color/white"
@@ -85,7 +85,8 @@
         android:paddingLeft="16dp"
         android:paddingStart="16dp"
         app:hideOnScroll="true"
-        app:fabAlignmentMode="center">
+        app:fabAlignmentMode="center"
+        tools:ignore="RtlSymmetry">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -98,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_settings"
                 app:backgroundTint="@color/white"
+                android:contentDescription="@string/profile_page"
                 app:layout_constraintBottom_toBottomOf="@+id/home_page_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -111,6 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_home"
+                android:contentDescription="@string/home_page"
                 app:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/emptyButton"
@@ -124,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/transparent"
+                android:contentDescription="@string/desc1"
                 app:layout_constraintBottom_toBottomOf="@+id/home_page_btn"
                 app:layout_constraintEnd_toStartOf="@+id/goto_profile_btn"
                 app:layout_constraintHorizontal_bias="0.5"
