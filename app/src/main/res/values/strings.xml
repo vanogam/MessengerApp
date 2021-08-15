@@ -12,6 +12,13 @@
     <string name="profile_pic_description">Contact profile picture</string>
     <string name="update">Update</string>
     <string name="sign_out">Sign Out</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="avatar_description">avatar</string>
+    <string name="back_button_description">back to home page</string>
+    <string name="message_hint">Message</string>
+    <string name="send_message">Send message</string>
+    <string name="add_contact">Add contact</string>
+    <string name="profile_page">profile page</string>
+    <string name="home_page">Home page</string>
+    <string name="desc1">You did not see nothing</string>
 </resources>

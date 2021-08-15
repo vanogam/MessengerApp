@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MessengerApp">
         <activity android:name=".UserSearchActivity"></activity>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".ChatActivity"/>
         <activity android:name=".ProfileActivity" /> <!-- <activity android:name=".LoginActivity" /> -->
         <activity android:name=".HomePageActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

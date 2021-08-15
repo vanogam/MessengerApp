@@ -1,16 +1,11 @@
 package ge.finalproject.messengerapp.presenter
 
-import ge.finalproject.messengerapp.models.ChatHeader
-
-
 interface IChatPresenter {
 
-    fun loadChatHeaders()
+    fun initListener(chatId: String)
 
-    fun onChatHeadersLoaded()
+    fun loadChat(chatId: String, maxTime: Long, limit: Int, startIndex: Int)
 
-    fun onChatHeaderUpdated()
-
-    fun onChatHeaderAdded()
+    fun sendMessage(text: String)
 
 }

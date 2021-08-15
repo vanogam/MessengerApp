@@ -25,12 +25,21 @@ import java.util.*
 
 
 class ChatListAdapter (
-    private val values: List<ChatHeader>,
+    private val values: ArrayList<ChatHeader>,
 ) : RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
     private lateinit var context: Context
-
     private var numLoaded = 0
+
+    lateinit var chatListener: OnItemClickListener;
+
+    interface OnItemClickListener {
+        fun onClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        chatListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -117,11 +126,36 @@ class ChatListAdapter (
         return formatter.format(Date(time))
     }
 
+    fun onChatHeaderUpdated(chatId: String, chatHeader: ChatHeader) {
+        var i = 0
+        while (i < values.size) {
+            if (values[i].chatId == chatId) {
+                values.remove(values[i])
+                values.add(0, chatHeader)
+                (context as Activity).findViewById<RecyclerView>(R.id.chatHeaderList).post {
+                    notifyItemInserted(0)
+                    notifyItemRemoved(i)
+                }
+                break
+            }
+        }
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val time: TextView = view.findViewById(R.id.timestamp)
         val contactName: TextView = view.findViewById(R.id.contactName)
         val isLoading: CircularProgressIndicator = view.findViewById(R.id.isLoading)
         val lastMessage: TextView = view.findViewById(R.id.lastMessage)
         val profilePic: ImageView = view.findViewById(R.id.profilePic)
+
+        init {
+            itemView.setOnClickListener {
+                if (chatListener != null) {
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        chatListener.onClick(adapterPosition)
+                    }
+                }
+            }
+        }
     }
 }

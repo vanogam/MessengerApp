@@ -22,7 +22,7 @@ import ge.finalproject.messengerapp.models.ChatHeader
 import ge.finalproject.messengerapp.models.UserHeader
 
 
-class UserListAdapter() : RecyclerView.Adapter<UserListItemViewHolder>() {
+class UserListAdapter() : RecyclerView.Adapter<UserListAdapter.UserListItemViewHolder>() {
     private lateinit var context: Context
     var numLoaded = 0
     var list = ArrayList<UserHeader?>()
@@ -92,11 +92,11 @@ class UserListAdapter() : RecyclerView.Adapter<UserListItemViewHolder>() {
         holder.tvJob.text = item?.job
         numLoaded += 1
     }
-}
+    class UserListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var profilePicture: ImageView = view.findViewById(R.id.profile_picture)
+        var tvNickname: TextView = view.findViewById(R.id.nickname_tv)
+        var tvJob: TextView = view.findViewById(R.id.job_tv)
+        var isLoading: CircularProgressIndicator = view.findViewById(R.id.isLoading)
+    }
 
-class UserListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var profilePicture: ImageView = view.findViewById(R.id.profile_picture)
-    var tvNickname: TextView = view.findViewById(R.id.nickname_tv)
-    var tvJob: TextView = view.findViewById(R.id.job_tv)
-    var isLoading: CircularProgressIndicator = view.findViewById(R.id.isLoading)
 }
