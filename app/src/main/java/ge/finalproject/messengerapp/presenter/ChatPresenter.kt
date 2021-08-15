@@ -6,7 +6,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ge.finalproject.messengerapp.models.ChatHeader
-import ge.finalproject.messengerapp.models.User
+import ge.finalproject.messengerapp.models.UserHeader
 import ge.finalproject.messengerapp.view.IChatListView
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
@@ -129,7 +129,7 @@ class ChatPresenter(val view: IChatListView): IChatPresenter {
         }
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val u = snapshot.getValue(User::class.java)
+                val u = snapshot.getValue(UserHeader::class.java)
                 Log.d("UUU", u!!.profilePicture)
                 chatHeader.nickname = u!!.nickname!!
                 chatHeader.profilePic = u.profilePicture
