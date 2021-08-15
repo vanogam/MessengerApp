@@ -2,6 +2,7 @@ package ge.finalproject.messengerapp
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -157,6 +158,15 @@ class LoginActivity : AppCompatActivity() {
 
         fun start(context: Context){
             context.startActivity(Intent(context, LoginActivity::class.java))
+        }
+
+        fun signOutAndStart(applicationContext: Context, context: Context){
+            var intent = Intent(applicationContext, LoginActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("EXIT", true)
+            context.startActivity(intent)
         }
     }
 
