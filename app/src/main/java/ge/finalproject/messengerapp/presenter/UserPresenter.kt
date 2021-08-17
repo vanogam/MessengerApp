@@ -137,7 +137,8 @@ class UserPresenter(val view: IUserListView?): IUserPresenter {
                 contacts[userId]?.set(myId, chatId)
                 ref.setValue(contacts)
                 ref.removeEventListener(this)
-                getChats(userId)
+//                getChats(userId)
+                view?.onChatIdLoaded(chatId, userHeaders[userId])
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("ERROR", "error ar addUserInContacts: ${error.message}")
