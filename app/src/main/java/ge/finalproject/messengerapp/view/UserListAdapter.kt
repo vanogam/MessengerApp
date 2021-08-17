@@ -18,11 +18,12 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.storage.FirebaseStorage
 import ge.finalproject.messengerapp.R
+import ge.finalproject.messengerapp.UserHeaderListListener
 import ge.finalproject.messengerapp.models.ChatHeader
 import ge.finalproject.messengerapp.models.UserHeader
 
 
-class UserListAdapter() : RecyclerView.Adapter<UserListAdapter.UserListItemViewHolder>() {
+class UserListAdapter(val listListener: UserHeaderListListener) : RecyclerView.Adapter<UserListAdapter.UserListItemViewHolder>() {
     private lateinit var context: Context
     var numLoaded = 0
     var list = ArrayList<UserHeader?>()
@@ -41,7 +42,6 @@ class UserListAdapter() : RecyclerView.Adapter<UserListAdapter.UserListItemViewH
                 holder.profilePicture.setImageDrawable(context.resources.getDrawable(R.drawable.avatar_image_placeholder))
                 setValues(holder, item)
             } else {
-
                 val filename = item?.profilePicture
                 val storageRef = FirebaseStorage.getInstance().getReference("$filename")
                 storageRef.downloadUrl
@@ -75,6 +75,10 @@ class UserListAdapter() : RecyclerView.Adapter<UserListAdapter.UserListItemViewH
                             .into(holder.profilePicture)
                     }
 
+            }
+            holder.itemView.setOnClickListener{
+                listListener.onUserHeaderClicked(UserHeader(item?.nickname.toString(),
+                                            item?.job.toString(),item?.profilePicture.toString()))
             }
         }
     }

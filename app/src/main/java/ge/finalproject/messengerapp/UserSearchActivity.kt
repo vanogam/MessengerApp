@@ -14,9 +14,9 @@ import ge.finalproject.messengerapp.view.UserListAdapter
 import java.util.*
 
 
-class UserSearchActivity : AppCompatActivity(), IUserListView {
+class UserSearchActivity : AppCompatActivity(), IUserListView, UserHeaderListListener {
     private lateinit var recyclerView: RecyclerView
-    private var adapter = UserListAdapter()
+    private var adapter = UserListAdapter(this)
     private lateinit var presenter: UserPresenter
     private lateinit var searchBar: FloatingSearchView
 
@@ -33,9 +33,6 @@ class UserSearchActivity : AppCompatActivity(), IUserListView {
                     presenter.search(newQuery.toString())
                 }
             }
-
-
-
         })
     }
 
@@ -52,5 +49,21 @@ class UserSearchActivity : AppCompatActivity(), IUserListView {
         recyclerView.adapter = adapter
     }
 
+    override fun onChatIdLoaded(chatId: String, userHeader: UserHeader?) {
+        var intent = Intent(this, ChatActivity::class.java)
+        intent.putExtra(ChatActivity.CHAT_ID, chatId)
+        intent.putExtra(ChatActivity.NICKNAME, userHeader?.nickname)
+        intent.putExtra(ChatActivity.JOB, userHeader?.job)
+        intent.putExtra(ChatActivity.PROFILE_PIC, userHeader?.profilePicture)
+        startActivity(intent)
+    }
+
+    override fun onUserHeaderClicked(userHeader: UserHeader) {
+        presenter.getChatId(userHeader.nickname)
+    }
+}
+
+interface UserHeaderListListener{
+    fun onUserHeaderClicked(userHeader: UserHeader)
 }
 
