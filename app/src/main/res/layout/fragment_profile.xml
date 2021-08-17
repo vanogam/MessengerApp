@@ -29,22 +29,35 @@
     <EditText
         android:id="@+id/job_et"
         style="@style/text_field_style"
-        app:layout_constraintBottom_toTopOf="@+id/update_btn"
+        app:layout_constraintBottom_toTopOf="@+id/update_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.863" />
-
-    <Button
-        android:id="@+id/update_btn"
-        style="@style/BlueButtonStyle"
-        android:text="@string/update"
-        android:textAllCaps="false"
+    <FrameLayout
+        android:id="@+id/update_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/sign_out_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.955" />
+        app:layout_constraintVertical_bias="0.955"
+        >
+        <Button
+            android:id="@+id/update_btn"
+            style="@style/BlueButtonStyle"
+            android:text="@string/update"
+            android:textAllCaps="false"
+        />
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/update_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
 
     <Button
         android:id="@+id/sign_out_btn"

@@ -59,8 +59,10 @@ class ChatListPresenter(val view: IChatListView): IChatListPresenter {
         if (!this::contactListener.isInitialized) {
             contactListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    cachedContacts = dataSnapshot.value as HashMap<String, Any>
-                    onContactsLoaded()
+                    if (dataSnapshot.value != null) {
+                        cachedContacts = dataSnapshot.value as HashMap<String, Any>
+                        onContactsLoaded()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
