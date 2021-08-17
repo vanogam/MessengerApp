@@ -66,6 +66,7 @@ class UserPresenter(val view: IUserListView?): IUserPresenter {
                 }else{
                     addUserInChats(userId)
                 }
+                ref.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("ERROR", "error ar isUserInContacts: ${error.message}")
@@ -83,8 +84,7 @@ class UserPresenter(val view: IUserListView?): IUserPresenter {
             override fun onDataChange(snapshot: DataSnapshot) {
                 chats = snapshot.value as ArrayList<HashMap<String, Any>>
                 var chatId = (chats.size-1).toString()
-                var hm = HashMap<String, Any>(2)
-                hm.set("0", Message())
+                var hm = HashMap<String, Any>(1)
                 hm.set("1", object{ val sender = "sys"
                                     val time = 1 })
                 chats.add(hm)
